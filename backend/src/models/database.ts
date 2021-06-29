@@ -1,11 +1,11 @@
 import { Sequelize } from "sequelize";
 
 export const sequelize = new Sequelize(
-  String(process.env.MYSQL_HOSTNAME),
-  String(process.env.MYSQL_USERNAME),
-  String(process.env.MYSQL_PASSWORD),
+  String(process.env.POSTGRE_HOSTNAME),
+  String(process.env.POSTGRE_USERNAME),
+  String(process.env.POSTGRE_PASSWORD),
   {
-    dialect: "mysql",
-    host: "mysql_1",
+    dialect: "postgres",
+    host: "postgre_1",
   }
 );

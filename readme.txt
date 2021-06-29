@@ -1,15 +1,14 @@
-Create dumb folder, or comment out the copy command from dockerfile of mysql container.
-This is needed if we want to start our database with an init.sql script.
-database/dumbs/
+Template from 
+https://github.com/Niour/docker-compose-mysql-express-react
 
-start docker-compose
+-- start docker-compose
 docker-compose up
 
-access docker mysql, where [hospital_app_default] is the [network] 
-docker run -it --network hospital_app_default --rm mysql:8.0 mysql -hmysql_1 -uroot -p
+Access postgre CLI with docker Cli. Where [nodejs_challenge_default] the network name. https://github.com/docker-library/postgres/pull/253
+This is a different approach:
+docker run -it --network  nodejs_challenge_default --rm --user root  -e POSTGRES_PASSWORD=123 nodejs_challenge_postgre_1 psql -h postgre_1 -U career -W
+or use Docker-UI to access the image cli and then.
+psql -h localhost -U career -W 
 
-create a sql dump file of all databases.
-docker exec  [container-name] sh -c 'exec mysqldump --all-databases -uroot -p"[password]"' > [path]/all-databases.sql
-
-This project actually froze and it is just a docker-compose node,mysql,react started kit.
+This project is a Nodejs challenge.
 It was run via wsl2 and is needed to be placed or cloned inside wsl2 file system in order to chokidar ( nodemon dependency) to run.

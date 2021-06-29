@@ -1,7 +1,3 @@
-FROM mysql:8.0
+FROM postgres
 
-WORKDIR /docker-entrypoint-initdb.d
-
-COPY ./dumbs .
-
-WORKDIR /
+COPY init.sql /docker-entrypoint-initdb.d/
