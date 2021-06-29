@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  mysql_1:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - data:/data/db
+    env_file:
+      - ./env/mysql.env
+    volumes:
+      - data:/var/lib/mysql
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/app/Logs
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mysql_1
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+      
+volumes:
+  data:
+  logs:
