@@ -3,14 +3,14 @@ import qs from "qs";
 import express from "express";
 // import morgan from "morgan";
 import helmet from "helmet";
-import { firstRouter } from "./routes/first";
+import { signupRouter } from "./routes/signup";
 import { sequelize } from "./models/database";
+import { loginRouter } from "./routes/login";
+import { authenticateUser } from "./middleware/authentication";
+import { handleError } from "./middleware/errors";
+import { defaultRouter } from "./routes/default";
 
 const app = express();
-
-// app.use(morgan("dev"));
-app.use(helmet());
-app.use(express.json());
 
 // http://expressjs.com/en/4x/api.html#app.settings.table
 // https://github.com/expressjs/express/issues/3039
@@ -18,7 +18,16 @@ app.use(express.json());
 app.set("query parser", function (str: string) {
   return qs.parse(str, { comma: true });
 });
+// app.use(morgan("dev"));
+app.use(helmet());
+app.use(express.json());
+app.use(signupRouter);
+app.use(loginRouter);
 
-app.use(firstRouter);
+app.use(authenticateUser);
+
+app.use(defaultRouter);
+
+app.use(handleError);
 
 sequelize.sync().then(() => app.listen(80));

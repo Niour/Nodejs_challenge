@@ -6,6 +6,9 @@ import { hash } from "bcrypt";
   paranoid: true,
 })
 class User extends Model {
+  @Column({ primaryKey: true, autoIncrement: true })
+  id!: number;
+
   @Column
   username!: string;
 
