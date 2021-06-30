@@ -2,12 +2,15 @@ import qs from "qs";
 // import cors from "cors";
 import express from "express";
 // import morgan from "morgan";
-// import helmet from "helmet";
+import helmet from "helmet";
 import { firstRouter } from "./routes/first";
+import { sequelize } from "./models/database";
 
 const app = express();
 
 // app.use(morgan("dev"));
+app.use(helmet());
+app.use(express.json());
 
 // http://expressjs.com/en/4x/api.html#app.settings.table
 // https://github.com/expressjs/express/issues/3039
@@ -18,4 +21,4 @@ app.set("query parser", function (str: string) {
 
 app.use(firstRouter);
 
-app.listen(80);
+sequelize.sync().then(() => app.listen(80));
