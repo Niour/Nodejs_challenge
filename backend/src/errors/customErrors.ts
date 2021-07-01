@@ -44,3 +44,9 @@ export class EntityAlreadyExistError extends CustomError {
     );
   }
 }
+
+export class AuthorizationError extends CustomError {
+  constructor(message = "Not authorized") {
+    super(message, "NOT_AUTHORIZED", 401);
+  }
+}
