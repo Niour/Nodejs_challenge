@@ -1,7 +1,15 @@
-import { Table, Column, Model, BeforeCreate } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  BeforeCreate,
+  HasMany,
+} from "sequelize-typescript";
 import { hash } from "bcrypt";
+import Company from "./company";
 
 @Table({
+  modelName: "User",
   timestamps: true,
   paranoid: true,
 })
@@ -17,6 +25,9 @@ class User extends Model {
 
   @Column
   password!: string;
+
+  @HasMany(() => Company, "companyUserId")
+  comp!: Company[];
 
   @BeforeCreate
   static async hashPassword(instance: User) {

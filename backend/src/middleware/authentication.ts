@@ -15,14 +15,20 @@ export const authenticateUser = catchErrors(async (req, res, next) => {
   if (!userId) {
     throw new InvalidTokenError("Authentication token is invalid.");
   }
-  const user = await User.findOne(userId);
+  const user: User | null = await User.findOne({
+    attributes: ["id", "username", "email"],
+    where: { id: userId },
+  });
+  console.log(user);
+
   if (!user) {
     throw new InvalidTokenError(
       "Authentication token is invalid: User not found."
     );
+  } else {
+    res.locals.currentUser = user;
+    next();
   }
-  res.locals.currentUser = user;
-  next();
 });
 
 const getAuthTokenFromRequest = (req: Request): string | null => {

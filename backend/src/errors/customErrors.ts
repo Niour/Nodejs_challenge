@@ -34,3 +34,13 @@ export class DatabaseError extends CustomError {
     super("Something went wrong with the database.", "DATABASE_ERROR", 500);
   }
 }
+
+export class EntityAlreadyExistError extends CustomError {
+  constructor(entityText: string, status = 409) {
+    super(
+      `${entityText} name already exists`,
+      "ENTITY_ALREADY_CREATED",
+      status
+    );
+  }
+}
