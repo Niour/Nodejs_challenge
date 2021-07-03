@@ -1,7 +1,7 @@
 import qs from "qs";
 // import cors from "cors";
 import express from "express";
-// import morgan from "morgan";
+import morgan from "morgan";
 import helmet from "helmet";
 import { signupRouter } from "./routes/signup";
 import { sequelize } from "./models/database";
@@ -11,8 +11,15 @@ import { handleError } from "./middleware/errors";
 import { defaultRouter } from "./routes/default";
 import { companyRouter } from "./routes/company";
 import { jobRouter } from "./routes/job";
+import { loggingOnFinish, logTime } from "./middleware/logging";
+import { logRouter } from "./routes/log";
 
 const app = express();
+
+app.use(morgan("dev"));
+
+app.use(logTime);
+app.use(loggingOnFinish);
 
 // http://expressjs.com/en/4x/api.html#app.settings.table
 // https://github.com/expressjs/express/issues/3039
@@ -31,6 +38,7 @@ app.use(authenticateUser);
 app.use(companyRouter);
 app.use(defaultRouter);
 app.use(jobRouter);
+app.use(logRouter);
 
 app.use(handleError);
 
