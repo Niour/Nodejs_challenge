@@ -5,7 +5,7 @@ import User from "../models/user";
 export const defaultRouter = express.Router();
 
 defaultRouter.get(
-  "/",
+  "/usersList",
   catchErrors(async function (_req, res, _next) {
     const data = await User.findAll();
     res.json(data);

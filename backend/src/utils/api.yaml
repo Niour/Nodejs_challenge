@@ -1,0 +1,544 @@
+paths:
+  /login:
+    post:
+      summary: "Login"
+      description: "Validate credentials to get the bearer token"
+      operationId: "loginEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/AuthConfig"
+      responses:
+        200:
+          description: "An bearer token was send successfully."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: "The token send by the server"
+              examples:
+                textexample:
+                  summary: This is a text example
+                  value: { "token": "eyJhbGciOiJIUzI1NiIsInDIsImV4" }
+      tags:
+        - Authentication
+  /Signup:
+    post:
+      summary: "Signup"
+      description: "Register new user to the api"
+      operationId: "SignupEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/AuthConfig"
+      responses:
+        200:
+          description: "Successful creation of the User"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "Id of the user"
+                  username:
+                    type: string
+                    description: "Name of the user"
+                  email:
+                    type: string
+                    description: "Email of the user"
+                  password:
+                    type: string
+                    description: "Password of the user"
+                  updatedAt:
+                    type: string
+                    description: "Updated time of the user's credentials, Timestamp with time zone format."
+                  createdAt:
+                    type: string
+                    description: "Create time of the user's credentials, Timestamp with time zone format."
+                  deletedAt:
+                    type: string
+                    description: "Delete time of the user's credentials, Timestamp with time zone format."
+      tags:
+        - Authentication
+  /usersList:
+    get:
+      summary: "usersList"
+      description: "List All users"
+      operationId: "usersListEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      responses:
+        200:
+          description: "List All Active Users"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Id of the user"
+                    username:
+                      type: string
+                      description: "Name of the user"
+                    email:
+                      type: string
+                      description: "Email of the user"
+                    password:
+                      type: string
+                      description: "Password of the user"
+                    updatedAt:
+                      type: string
+                      description: "Updated time of the user's credentials, Timestamp with time zone format."
+                    createdAt:
+                      type: string
+                      description: "Create time of the user's credentials, Timestamp with time zone format."
+                    deletedAt:
+                      type: string
+                      description: "Delete time of the user's credentials, Timestamp with time zone format."
+              examples:
+                textexample:
+                  summary: This is a text example
+                  value:
+                    [
+                      {
+                        "id": 1,
+                        "username": "Nikos",
+                        "email": "nikos.lourountzis@hotmail.com",
+                        "password": "123",
+                        "createdAt": "2021-06-29T17:53:32.000Z",
+                        "updatedAt": "2021-06-29T17:53:32.000Z",
+                        "deletedAt": null,
+                      },
+                      {
+                        "id": 34,
+                        "username": "Nikos2",
+                        "email": "Nikos@demo.com",
+                        "password": "$2b$10$GHFr3Vvgb159pYU.lnx42enaIoqF3eXiAVgv1zAIRBSZkodCNVg12",
+                        "createdAt": "2021-07-03T15:34:40.863Z",
+                        "updatedAt": "2021-07-03T15:34:40.863Z",
+                        "deletedAt": null,
+                      },
+                    ]
+      tags:
+        - Log
+  /company:
+    get:
+      summary: "Company"
+      description: "List Companies a user has created."
+      operationId: "CompanyEndpoint"
+      produces: ["application/json"]
+      responses:
+        200:
+          description: "Lists companies a user has created."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Id of the company"
+                    companyName:
+                      type: string
+                      description: "Company name"
+              examples:
+                textexample:
+                  summary: This is a text example
+                  value: [{ "id": 34, "companyName": "Nikos3" }]
+      tags:
+        - Company
+  /company/create:
+    post:
+      summary: "Company Create"
+      description: "Register new company to the api"
+      operationId: "CompanyCreateEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/CompanyConfig"
+      responses:
+        200:
+          description: "Successful creation of the Company"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "integer"
+                    description: company Id
+                  companyName:
+                    type: "string"
+                    description: companyName
+                  companyUserId:
+                    type: integer
+                    description: UserId of the company
+                  updatedAt:
+                    type: "string"
+                    description: Time
+                  createdAt:
+                    type: "string"
+                    description: Time
+                  deletedAt:
+                    type: "string"
+                    description: Time
+      tags:
+        - Company
+  /company/update:
+    put:
+      summary: "Company update"
+      description: "Updates new company to the api"
+      operationId: "CompanyupdateEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/CompanyUpdate"
+      responses:
+        200:
+          description: "Successful update of the Company"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "integer"
+                    description: company Id
+                  companyName:
+                    type: "string"
+                    description: companyName
+                  companyUserId:
+                    type: integer
+                    description: UserId of the company
+                  updatedAt:
+                    type: "string"
+                    description: Time
+      tags:
+        - Company
+  /company/delete:
+    delete:
+      summary: "Company delete"
+      description: "Register new company to the api"
+      operationId: "CompanydeleteEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/CompanyDelete"
+      responses:
+        200:
+          description: "Successful deletion of the Company"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companyName:
+                    type: "string"
+                    description: companyName
+                  id:
+                    type: "integer"
+                    description: company Id
+      tags:
+        - Company
+  /job:
+    get:
+      summary: "Job"
+      description: "List Jobs a list of companies is curently holding."
+      operationId: "JobEndpoint"
+      produces: ["application/json"]
+      parameters:
+        - in: query
+          name: company
+          description: A List of Companies, array of integers
+          schema:
+            type: string
+            description: explode true
+          examples:
+            test:
+              summary: Array or single.
+              value: 1 or 1,2
+      responses:
+        200:
+          description: "Lists Jobs a list of companies curently holding.."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    CompanyID:
+                      type: integer
+                      description: "Id of the Job"
+                    jobss:
+                      type: array
+                      description: "An array of jobs Objects"
+              examples:
+                textexample:
+                  summary: This is a text example
+                  value:
+                    [
+                      {
+                        "CompanyID": 34,
+                        "jobss":
+                          [
+                            {
+                              "id": 1,
+                              "title": "Senior Dev",
+                              "description": "Senior Dev that knows MySQL, PHP, Node.js",
+                            },
+                            {
+                              "id": 2,
+                              "title": "Senior Dev",
+                              "description": "Senior Dev that knows MySQL, PHP, Node.js",
+                            },
+                            {
+                              "id": 3,
+                              "title": "Senior Dev",
+                              "description": "Senior Dev that knows MySQL, PHP, Node.js",
+                            },
+                          ],
+                      },
+                    ]
+      tags:
+        - Job
+  /job/delete:
+    delete:
+      summary: "job delete"
+      description: "Register new job to the api"
+      operationId: "jobdeleteEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/JobDelete"
+      responses:
+        200:
+          description: "Successful deletion of the job"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "integer"
+                    description: job Id
+      tags:
+        - Job
+
+  /logs:
+    get:
+      summary: "Logs"
+      description: "List of all Logs all users have made."
+      operationId: "LogsEndpoint"
+      produces: ["application/json"]
+      responses:
+        200:
+          description: "List of all Logs all users have made."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Id of the log"
+                    uid:
+                      type: string
+                      description: "Authenticated user that made the request"
+                    method:
+                      type: string
+                      description: "Type of Request"
+                    path:
+                      type: string
+                      description: "Path user asked"
+                    route:
+                      type: string
+                      description: "Route user reached"
+                    status:
+                      type: integer
+                      description: "Response status code"
+                    milliseconds:
+                      type: string
+                      description: "Milliseconds of server to send the request"
+                    createdAt:
+                      type: integer
+                      description: "Time of log create"
+                    updatedAt:
+                      type: string
+                      description: "Time of log updated"
+                    deletedAt:
+                      type: integer
+                      description: "Time of log soft deleted"
+              examples:
+                textexample:
+                  summary: This is a text example
+                  value:
+                    [
+                      {
+                        "id": 1,
+                        "uid": -1,
+                        "method": "GET",
+                        "path": "/",
+                        "route": "/",
+                        "status": 200,
+                        "milliseconds": 5,
+                        "createdAt": "2021-07-03T10:53:31.911Z",
+                        "updatedAt": "2021-07-03T10:53:31.911Z",
+                        "deletedAt": null,
+                      },
+                      {
+                        "id": 2,
+                        "uid": -1,
+                        "method": "GET",
+                        "path": "/swagger.json",
+                        "route": "/swagger.json",
+                        "status": 200,
+                        "milliseconds": 2,
+                        "createdAt": "2021-07-03T10:53:43.772Z",
+                        "updatedAt": "2021-07-03T10:53:43.772Z",
+                        "deletedAt": null,
+                      },
+                    ]
+      tags:
+        - Log
+tags:
+  - name: "Εrrors"
+    x-displayName: "Errors"
+    description: |
+      The API uses standard HTTP status codes to indicate the success or failure of the API call. The body of the response will be JSON in the following format:
+      ```
+      {
+      error: {
+        message: "error message",
+        code: "status message",
+        status: "status code",
+        }
+      }
+      ```
+  - name: "Authentication"
+    x-displayName: "Authentication"
+    description: |
+      The authentication follows the Bearer authentication scheme that involves security tokens called bearer tokens.The bearer token is a string, generated by the server in response to a login request. The client must send this token in the Authorization header when making requests to the routes.
+      ```
+      Authorization: Bearer <token>
+      ```
+      Bearer token is issued for 1hour. Get your token from the [`/login` endpoint](#operation/loginEndpoint).
+
+  - name: "Company"
+    x-displayName: "Company"
+    description: Companies Information
+
+  - name: "Job"
+    x-displayName: "Job"
+    description: Jobs Information
+
+  - name: Log
+    x-displayName: "Logs"
+    description: Logs Information
+
+components:
+  schemas:
+    AuthConfig:
+      type: object
+      required: ["username", "password"]
+      properties:
+        username:
+          type: "string"
+          description: Username
+        password:
+          type: "string"
+          description: Password
+      example:
+        username: "Nikos"
+        password: "123"
+    CompanyConfig:
+      type: object
+      required: ["companyName"]
+      properties:
+        companyName:
+          type: "string"
+          description: companyName
+      example:
+        companyName: "Lidl"
+    CompanyDelete:
+      type: object
+      required: ["companyId"]
+      properties:
+        companyId:
+          type: "string"
+          description: companyId
+      example:
+        companyId: 34
+    CompanyUpdate:
+      type: object
+      required: ["newName", "companyId"]
+      properties:
+        companyId:
+          type: "integer"
+          description: Company Id
+        newName:
+          type: "string"
+          description: companyName
+      example:
+        newName: "Lidl"
+        companyId: 35
+    CompanyResponse:
+      type: object
+      properties:
+        id:
+          type: "integer"
+          description: company Id
+        companyName:
+          type: "string"
+          description: companyName
+        companyUserId:
+          type: integer
+          description: UserId of the company
+        updatedAt:
+          type: "string"
+          description: Time
+        createdAt:
+          type: "string"
+          description: Time
+        deletedAt:
+          type: "string"
+          description: Time
+    JobDelete:
+      type: object
+      required: ["jobId"]
+      properties:
+        jobId:
+          type: "integer"
+          description: jobId
+      example:
+        jobId: 1

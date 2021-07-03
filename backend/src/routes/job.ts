@@ -17,6 +17,8 @@ export const jobRouter = express.Router();
 jobRouter.get(
   "/jobs",
   catchErrors(async function (req, res, _next) {
+    console.log(req.query.company);
+
     validate(
       req.query.company,
       Joi.array().items(numberschema).single(),
@@ -81,23 +83,32 @@ jobRouter.delete(
   validateBody(numberschema.required(), "jobId"),
   catchErrors(async function (req, res, _next) {
     const { jobId } = req?.body;
+    console.log(jobId);
 
     const job = await Job.findOne({
       attributes: ["id"],
-      include: {
-        model: Company,
-        attributes: ["id"],
-      },
+      include: [
+        {
+          model: Company,
+          attributes: ["id"],
+          include: [
+            {
+              model: User,
+              attributes: ["id"],
+            },
+          ],
+        },
+      ],
       where: { id: jobId },
     });
 
     if (!job) {
       throw new EntityNotFoundError("Job does not exist");
-    } else if (job.jobToCompany.id != res.locals.currentUser.id) {
+    } else if (job.jobToCompany.companyToUser.id != res.locals.currentUser.id) {
       throw new AuthorizationError("Cant delete this Job");
     } else {
       job.destroy();
-      res.status(200).json(job);
+      res.status(200).json({ id: job.id });
     }
   })
 );

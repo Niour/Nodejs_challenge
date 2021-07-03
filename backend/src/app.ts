@@ -16,6 +16,14 @@ import { logRouter } from "./routes/log";
 import swaggerConfig, { htmlReDoc } from "./utils/swaggerConfig";
 
 const app = express();
+
+// http://expressjs.com/en/4x/api.html#app.settings.table
+// https://github.com/expressjs/express/issues/3039
+// https://github.com/expressjs/express/issues/4053
+app.set("query parser", function (str: string) {
+  return qs.parse(str, { comma: true });
+});
+
 app.use(express.static("public"));
 app.use(morgan("dev"));
 
@@ -30,13 +38,6 @@ app.get("/docs", (_req, res) => {
   res.send(htmlReDoc);
 });
 
-// http://expressjs.com/en/4x/api.html#app.settings.table
-// https://github.com/expressjs/express/issues/3039
-// https://github.com/expressjs/express/issues/4053
-app.set("query parser", function (str: string) {
-  return qs.parse(str, { comma: true });
-});
-// app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.json());
 app.use(signupRouter);
@@ -51,5 +52,8 @@ app.use(logRouter);
 
 app.use(handleError);
 
+app.use(function (_req, res) {
+  res.send(404);
+});
 // sequelize.sync({ force: true }).then(() => app.listen(80));
 sequelize.sync().then(() => app.listen(80));

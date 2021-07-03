@@ -4,6 +4,7 @@ import {
   Model,
   ForeignKey,
   HasMany,
+  BelongsTo,
 } from "sequelize-typescript";
 import Job from "./job";
 import User from "./user";
@@ -25,6 +26,9 @@ class Company extends Model {
 
   @HasMany(() => Job, "companyId")
   jobss!: Job[];
+
+  @BelongsTo(() => User)
+  companyToUser!: User;
 }
 
 export default Company;
