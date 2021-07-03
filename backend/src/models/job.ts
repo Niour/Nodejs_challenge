@@ -1,32 +1,29 @@
-// import {
-//     Table,
-//     Column,
-//     Model,
-//     ForeignKey,
-//     BelongsTo,
-//   } from "sequelize-typescript";
-//   import User from "./user";
+import {
+  Table,
+  Column,
+  Model,
+  ForeignKey,
+  DataType,
+} from "sequelize-typescript";
+import Company from "./company";
 
-//   @Table({
-//     timestamps: true,
-//     paranoid: true,
-//   })
-//   class Job extends Model {
-//     @Column({ primaryKey: true, autoIncrement: true })
-//     id!: number;
+@Table({
+  timestamps: true,
+  paranoid: true,
+})
+class Job extends Model {
+  @Column({ primaryKey: true, autoIncrement: true })
+  id!: number;
 
-//     @Column
-//     JobName!: string;
+  @Column
+  title!: string;
 
-//     @ForeignKey(() => User)
-//     @Column
-//     jobUserId!: number;
+  @ForeignKey(() => Company)
+  @Column
+  companyId!: number;
 
-//     @BelongsTo(() => User, "id")
-//     userCompany!: User;
+  @Column({ type: DataType.TEXT })
+  description!: string;
+}
 
-//     @Column
-//     jobs!: string;
-//   }
-
-//   export default Job;
+export default Job;

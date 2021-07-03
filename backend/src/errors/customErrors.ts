@@ -1,11 +1,16 @@
+import { ValidationError, ValidationResult } from "joi";
+
 type ErrorData = { [key: string]: any };
 
-export class CustomError extends Error {
+export class CustomError extends Error implements ValidationResult {
   constructor(
     public message: string,
     public code: string | number = "INTERNAL_ERROR",
     public status: number = 500,
-    public data: ErrorData = {}
+    public data: ErrorData = {},
+    public value: string = "",
+    public error?: ValidationError,
+    public warning?: ValidationError
   ) {
     super();
   }
@@ -48,5 +53,19 @@ export class EntityAlreadyExistError extends CustomError {
 export class AuthorizationError extends CustomError {
   constructor(message = "Not authorized") {
     super(message, "NOT_AUTHORIZED", 401);
+  }
+}
+
+export class CustomValidationError extends CustomError {
+  constructor(result: ValidationResult, values: string) {
+    super(
+      "There are Validation Erros",
+      "Validation_Errors",
+      400,
+      { name: values },
+      result.value,
+      result.error!,
+      result.warning
+    );
   }
 }

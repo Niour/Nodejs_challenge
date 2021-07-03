@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import Company from "./company";
+import Job from "./job";
 import User from "./user";
 
 export const sequelize = new Sequelize({
@@ -8,5 +9,5 @@ export const sequelize = new Sequelize({
   password: String(process.env.POSTGRE_PASSWORD),
   dialect: "postgres",
   host: "postgre_1",
-  models: [User, Company],
+  models: [User, Company, Job],
 });

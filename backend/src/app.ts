@@ -10,6 +10,7 @@ import { authenticateUser } from "./middleware/authentication";
 import { handleError } from "./middleware/errors";
 import { defaultRouter } from "./routes/default";
 import { companyRouter } from "./routes/company";
+import { jobRouter } from "./routes/job";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(authenticateUser);
 
 app.use(companyRouter);
 app.use(defaultRouter);
+app.use(jobRouter);
 
 app.use(handleError);
 

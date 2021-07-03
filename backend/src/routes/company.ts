@@ -13,11 +13,13 @@ export const companyRouter = express.Router();
 companyRouter.post(
   "/company/create",
   catchErrors(async function (req, res, _next) {
-    const { companyName, jobs } = req?.body;
+    const { companyName } = req?.body;
     const user: User = res.locals.currentUser;
     const exists = await Company.findOne({ where: { companyName } });
     if (!exists) {
-      const data = await user.$create("comp", { companyName, jobs });
+      console.log(companyName);
+
+      const data = await user.$create("comp", { companyName });
       res.json(data);
     } else {
       throw new EntityAlreadyExistError("Company");
@@ -71,7 +73,7 @@ companyRouter.get(
   catchErrors(async function (_req, res, _next) {
     const user: User = res.locals.currentUser;
     const data = await user.$get("comp", {
-      attributes: ["id", "companyName", "jobs"],
+      attributes: ["id", "companyName"],
     });
     res.json(data);
   })

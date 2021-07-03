@@ -27,7 +27,7 @@ class User extends Model {
   password!: string;
 
   @HasMany(() => Company, "companyUserId")
-  comp!: Company[];
+  comp?: Company[];
 
   @BeforeCreate
   static async hashPassword(instance: User) {

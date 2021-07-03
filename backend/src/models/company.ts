@@ -3,8 +3,9 @@ import {
   Column,
   Model,
   ForeignKey,
-  BelongsTo,
+  HasMany,
 } from "sequelize-typescript";
+import Job from "./job";
 import User from "./user";
 
 @Table({
@@ -22,11 +23,8 @@ class Company extends Model {
   @Column
   companyUserId!: number;
 
-  @BelongsTo(() => User, "id")
-  userCompany!: User;
-
-  @Column
-  jobs!: string;
+  @HasMany(() => Job, "companyId")
+  jobss!: Job[];
 }
 
 export default Company;
