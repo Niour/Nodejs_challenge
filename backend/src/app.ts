@@ -13,13 +13,22 @@ import { companyRouter } from "./routes/company";
 import { jobRouter } from "./routes/job";
 import { loggingOnFinish, logTime } from "./middleware/logging";
 import { logRouter } from "./routes/log";
+import swaggerConfig, { htmlReDoc } from "./utils/swaggerConfig";
 
 const app = express();
-
+app.use(express.static("public"));
 app.use(morgan("dev"));
 
 app.use(logTime);
 app.use(loggingOnFinish);
+
+app.get("/swagger.json", (_req, res) => {
+  res.send(swaggerConfig);
+});
+app.get("/docs", (_req, res) => {
+  res.set("Content-Type", "text/html");
+  res.send(htmlReDoc);
+});
 
 // http://expressjs.com/en/4x/api.html#app.settings.table
 // https://github.com/expressjs/express/issues/3039
