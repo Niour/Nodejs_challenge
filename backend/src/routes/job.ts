@@ -39,7 +39,7 @@ jobRouter.get(
       }
     }
     data = await Company.findAll({
-      attributes: ["id"],
+      attributes: [["id", "CompanyID"]],
       where: { ...(req?.query?.company && { id: companyId }) },
       include: [
         {
@@ -78,16 +78,22 @@ jobRouter.post(
 
 jobRouter.delete(
   "/job/delete",
+  validateBody(numberschema.required(), "jobId"),
   catchErrors(async function (req, res, _next) {
     const { jobId } = req?.body;
-    // const user: User = res.locals.currentUser;
+
     const job = await Job.findOne({
-      attributes: ["title", "id"],
+      attributes: ["id"],
+      include: {
+        model: Company,
+        attributes: ["id"],
+      },
       where: { id: jobId },
     });
+
     if (!job) {
       throw new EntityNotFoundError("Job does not exist");
-    } else if (job.id != res.locals.currentUser.id) {
+    } else if (job.jobToCompany.id != res.locals.currentUser.id) {
       throw new AuthorizationError("Cant delete this Job");
     } else {
       job.destroy();
@@ -98,35 +104,30 @@ jobRouter.delete(
 
 jobRouter.put(
   "/job/update",
+  validateBody(numberschema.required(), "jobId"),
+  validateBody(Joi.string().required(), "title"),
+  validateBody(Joi.string().required(), "description"),
   catchErrors(async function (req, res, _next) {
-    const { jobId, newName } = req?.body;
-    // const user: User = res.locals.currentUser;
+    const { jobId, title, description } = req?.body;
+
     const job = await Job.findOne({
       attributes: ["title", "id", "companyId"],
+      include: {
+        model: Company,
+        attributes: ["id"],
+      },
       where: { id: jobId },
     });
+
     if (!job) {
       throw new EntityNotFoundError("Job does not exist");
-    } else if (job.companyId != res.locals.currentUser.id) {
-      throw new AuthorizationError("Cant Update this Job");
+    } else if (job.jobToCompany.id != res.locals.currentUser.id) {
+      throw new AuthorizationError("Cant delete this Job");
     } else {
-      job.title = newName;
+      job.title = title;
+      job.description = description;
       job.save();
       res.status(200).json(job);
     }
   })
 );
-
-// jobRouter.get(
-//   "/job/:id",
-//   catchErrors(async function (req, res, _next) {
-//     // const user: User = res.locals.currentUser;
-//     const id: number = +req.params.id;
-
-//     const data = await Job.findOne({
-//       attributes: ["id", "title", "description"],
-//       where: { id },
-//     });
-//     res.json(data);
-//   })
-// );

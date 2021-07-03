@@ -4,6 +4,7 @@ import {
   Model,
   ForeignKey,
   DataType,
+  BelongsTo,
 } from "sequelize-typescript";
 import Company from "./company";
 
@@ -24,6 +25,9 @@ class Job extends Model {
 
   @Column({ type: DataType.TEXT })
   description!: string;
+
+  @BelongsTo(() => Company)
+  jobToCompany!: Company;
 }
 
 export default Job;
