@@ -17,8 +17,6 @@ export const jobRouter = express.Router();
 jobRouter.get(
   "/jobs",
   catchErrors(async function (req, res, _next) {
-    console.log(req.query.company);
-
     validate(
       req.query.company,
       Joi.array().items(numberschema).single(),
@@ -83,8 +81,6 @@ jobRouter.delete(
   validateBody(numberschema.required(), "jobId"),
   catchErrors(async function (req, res, _next) {
     const { jobId } = req?.body;
-    console.log(jobId);
-
     const job = await Job.findOne({
       attributes: ["id"],
       include: [

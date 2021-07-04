@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec ts-node ./src/app.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DEVE=TRUE jest ; rm -f jestToken"
   },
   "author": "",
   "license": "ISC",
@@ -30,13 +30,23 @@
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.12",
     "@types/express-serve-static-core": "^4.17.22",
+    "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/lodash": "^4.14.170",
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.12.5",
+    "@types/supertest": "^2.0.11",
     "@types/swagger-jsdoc": "^6.0.1",
     "@types/validator": "^13.1.3",
+    "jest": "26.6.3",
+    "supertest": "^6.1.3",
+    "ts-jest": "26.5.5",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "jestToken"
+    ]
   }
 }

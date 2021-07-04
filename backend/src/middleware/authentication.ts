@@ -19,7 +19,6 @@ export const authenticateUser = catchErrors(async (req, res, next) => {
     attributes: ["id", "username", "email"],
     where: { id: userId },
   });
-  console.log(user);
 
   if (!user) {
     throw new InvalidTokenError(

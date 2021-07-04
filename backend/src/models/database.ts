@@ -11,4 +11,5 @@ export const sequelize = new Sequelize({
   dialect: "postgres",
   host: "postgre_1",
   models: [User, Company, Job, Log],
+  logging: process.env.DEVE ? false : true,
 });

@@ -17,8 +17,6 @@ companyRouter.post(
     const user: User = res.locals.currentUser;
     const exists = await Company.findOne({ where: { companyName } });
     if (!exists) {
-      console.log(companyName);
-
       const data = await user.$create("comp", { companyName });
       res.json(data);
     } else {
@@ -36,8 +34,6 @@ companyRouter.delete(
       attributes: ["companyName", "id", "companyUserId"],
       where: { id: companyId },
     });
-    console.log(company);
-
     if (!company) {
       throw new EntityNotFoundError("Company does not exist");
     } else if (company.companyUserId != res.locals.currentUser.id) {

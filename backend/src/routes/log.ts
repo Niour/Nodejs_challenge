@@ -8,8 +8,6 @@ logRouter.get(
   "/logs",
   catchErrors(async function (_req, res, _next) {
     const data = await Log.findAll().catch(() => {});
-    console.log(data);
-
     res.json(data);
   })
 );

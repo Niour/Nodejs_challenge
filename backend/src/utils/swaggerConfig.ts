@@ -18,7 +18,6 @@ const options = {
   apis: [`*src/utils/api.yaml`],
 };
 const swaggerConfig = swaggerJSDoc(options);
-console.log(swaggerConfig);
 
 export const htmlReDoc = Buffer.from(`<!DOCTYPE html>
 <html>

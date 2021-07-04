@@ -24,7 +24,13 @@ app.set("query parser", function (str: string) {
 });
 
 app.use(express.static("public"));
-app.use(morgan("dev"));
+app.use(
+  morgan("dev", {
+    skip: function (_req, _res) {
+      return process.env.DEVE === "TRUE" ? true : false;
+    },
+  })
+);
 
 app.use(logTime);
 app.use(loggingOnFinish);
