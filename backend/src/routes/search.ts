@@ -7,6 +7,7 @@ import { validate } from "../utils/validation";
 
 export const searchRouter = express.Router();
 
+// Op.like is safe cause sequelize escapes the query
 searchRouter.get(
   "/search",
   catchErrors(async function (req, res, _next) {

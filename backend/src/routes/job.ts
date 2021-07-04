@@ -76,6 +76,7 @@ jobRouter.post(
   })
 );
 
+// We can't delete a job if we are not the creators of the company
 jobRouter.delete(
   "/job/delete",
   validateBody(numberschema.required(), "jobId"),
@@ -109,6 +110,7 @@ jobRouter.delete(
   })
 );
 
+// We can't update a job if we are not the creators of the company
 jobRouter.put(
   "/job/update",
   validateBody(numberschema.required(), "jobId"),

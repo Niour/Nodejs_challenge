@@ -7,6 +7,7 @@ import { signToken } from "../utils/authToken";
 
 export const loginRouter = express.Router();
 
+// This logic could be moved to a controller. TDO
 loginRouter.post(
   "/login",
   catchErrors(async function (req, res, _next) {

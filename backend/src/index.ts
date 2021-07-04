@@ -24,6 +24,7 @@ app.set("query parser", function (str: string) {
   return qs.parse(str, { comma: true });
 });
 
+// Middleware for serving static files at public folder.
 app.use(express.static("public"));
 app.use(
   morgan("dev", {
@@ -33,9 +34,11 @@ app.use(
   })
 );
 
+// These middleware are for logging request at logs table.
 app.use(logTime);
 app.use(loggingOnFinish);
 
+// Serves for documentation.
 app.get("/swagger.json", (_req, res) => {
   res.send(swaggerConfig);
 });
@@ -44,8 +47,11 @@ app.get("/docs", (_req, res) => {
   res.send(htmlReDoc);
 });
 
+// Helper routes
 app.use(helmet());
 app.use(express.json());
+
+// Basic Routes.
 app.use(signupRouter);
 app.use(loginRouter);
 
@@ -57,8 +63,10 @@ app.use(jobRouter);
 app.use(logRouter);
 app.use(searchRouter);
 
+// Last Route to check for Errors.
 app.use(handleError);
 
+// Catches all requests that does not point to specific route.
 app.use(function (_req, res) {
   res.send(404);
 });
