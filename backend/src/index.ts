@@ -13,6 +13,7 @@ import { jobRouter } from "./routes/job";
 import { loggingOnFinish, logTime } from "./middleware/logging";
 import { logRouter } from "./routes/log";
 import swaggerConfig, { htmlReDoc } from "./utils/swaggerConfig";
+import { searchRouter } from "./routes/search";
 
 export const app = express();
 
@@ -54,6 +55,7 @@ app.use(companyRouter);
 app.use(defaultRouter);
 app.use(jobRouter);
 app.use(logRouter);
+app.use(searchRouter);
 
 app.use(handleError);
 

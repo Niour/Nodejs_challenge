@@ -436,6 +436,62 @@ paths:
       tags:
         - Job
 
+  /search:
+    get:
+      summary: "Job"
+      description: "List Jobs that match query search"
+      operationId: "JobEndpoint"
+      produces: ["application/json"]
+      parameters:
+        - in: query
+          name: search
+          description: A Search String
+          schema:
+            type: string
+            description: simple string
+          examples:
+            test:
+              summary: String Value
+              value: Senior
+      responses:
+        200:
+          description: "Lists Jobs that match query search"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "Id of the Job"
+                    title:
+                      type: string
+                      description: "Title of the Job"
+                    jobss:
+                      type: array
+                      description: "Description of the job"
+              examples:
+                textexample:
+                  summary: This is a text example
+                  value:
+                    [
+                      {
+                        "id": 3,
+                        "title": "Senior Dev 2",
+                        "description": "Senior Dev that knows MySQL, PHP, Node.js",
+                      },
+                      {
+                        "id": 4,
+                        "title": "Senior Dev 1",
+                        "description": "Senior Dev that knows MySQL, PHP, Node.js",
+                      },
+                    ]
+
+      tags:
+        - Search
+
   /logs:
     get:
       summary: "Logs"
@@ -549,6 +605,9 @@ tags:
     x-displayName: "Logs"
     description: Logs Information
 
+  - name: Search
+    x-displayName: "Search"
+    description: Search Route. For searching title & description of job ads and return the most relevant ones.
 components:
   schemas:
     SignupConfig:

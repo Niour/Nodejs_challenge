@@ -22,3 +22,6 @@ docker cp [some container id]:/namefile /Path
 
 RUN TESTS:
 docker exec [some container id] npm test
+
+Swagger Documentation: 
+http://localhost/docs
