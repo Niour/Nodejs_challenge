@@ -4,6 +4,10 @@ https://github.com/Niour/docker-compose-mysql-express-react
 This project is a Nodejs challenge.
 It was run via wsl2 and is needed to be placed or cloned inside wsl2 file system in order to chokidar ( nodemon dependency) to run.
 
+Usernames and password:
+database username: career
+password: 123
+
 - Start the app with docker command:
 docker-compose up
 
