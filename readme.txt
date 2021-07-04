@@ -17,4 +17,4 @@ Backup:
 Inside Container:
 pg_dump -U career -W -d career > outfile3
 Copy files from container to wsl2:
-docker cp e6be36b4b804:/outfile3 ~/
+docker cp [some container id]:/namefile /Path

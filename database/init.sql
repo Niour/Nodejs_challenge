@@ -211,6 +211,8 @@ ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Use
 --
 
 COPY public."Companies" (id, "companyName", "companyUserId", "createdAt", "updatedAt", "deletedAt") FROM stdin;
+1	Company1	1	2021-07-04 09:05:57.225+00	2021-07-04 09:05:57.225+00	\N
+2	Company2	1	2021-07-04 09:05:59.487+00	2021-07-04 09:05:59.487+00	\N
 \.
 
 
@@ -219,6 +221,10 @@ COPY public."Companies" (id, "companyName", "companyUserId", "createdAt", "updat
 --
 
 COPY public."Jobs" (id, title, "companyId", description, "createdAt", "updatedAt", "deletedAt") FROM stdin;
+1	Junior Dev 1	1	Senior Dev that knows MySQL, PHP, Node.js	2021-07-04 09:06:03.942+00	2021-07-04 09:06:03.942+00	\N
+2	Junior Dev 2	1	Senior Dev that knows MySQL, PHP, Node.js	2021-07-04 09:06:07.75+00	2021-07-04 09:06:07.75+00	\N
+3	Senior Dev 2	2	Senior Dev that knows MySQL, PHP, Node.js	2021-07-04 09:06:15.591+00	2021-07-04 09:06:15.591+00	\N
+4	Senior Dev 1	2	Senior Dev that knows MySQL, PHP, Node.js	2021-07-04 09:06:18.337+00	2021-07-04 09:06:18.337+00	\N
 \.
 
 
@@ -227,6 +233,15 @@ COPY public."Jobs" (id, title, "companyId", description, "createdAt", "updatedAt
 --
 
 COPY public."Logs" (id, uid, method, path, route, status, milliseconds, "createdAt", "updatedAt", "deletedAt") FROM stdin;
+1	-1	POST	/login	/login	200	9	2021-07-04 09:05:47.64+00	2021-07-04 09:05:47.64+00	\N
+2	-1	POST	/signup	/signup	200	2	2021-07-04 09:05:50.302+00	2021-07-04 09:05:50.302+00	\N
+3	-1	POST	/login	/login	200	1	2021-07-04 09:05:52.417+00	2021-07-04 09:05:52.417+00	\N
+4	-1	POST		/company/create	200	2	2021-07-04 09:05:57.218+00	2021-07-04 09:05:57.218+00	\N
+5	-1	POST		/company/create	200	1	2021-07-04 09:05:59.484+00	2021-07-04 09:05:59.484+00	\N
+6	-1	POST		/job/create	200	1	2021-07-04 09:06:03.935+00	2021-07-04 09:06:03.935+00	\N
+7	-1	POST		/job/create	200	1	2021-07-04 09:06:07.743+00	2021-07-04 09:06:07.743+00	\N
+8	-1	POST		/job/create	200	1	2021-07-04 09:06:15.585+00	2021-07-04 09:06:15.585+00	\N
+9	-1	POST		/job/create	200	1	2021-07-04 09:06:18.331+00	2021-07-04 09:06:18.331+00	\N
 \.
 
 
@@ -235,6 +250,7 @@ COPY public."Logs" (id, uid, method, path, route, status, milliseconds, "created
 --
 
 COPY public."Users" (id, username, email, password, "createdAt", "updatedAt", "deletedAt") FROM stdin;
+1	Nikos	Nikos@demo.com	$2b$10$w9Yn6mLq6RcnPm2BDcn3OOjDBrB8gv1s8xOn.LmXxo09hwgDRBeIi	2021-07-04 09:05:50.305+00	2021-07-04 09:05:50.305+00	\N
 \.
 
 
@@ -242,28 +258,28 @@ COPY public."Users" (id, username, email, password, "createdAt", "updatedAt", "d
 -- Name: Companies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: career
 --
 
-SELECT pg_catalog.setval('public."Companies_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Companies_id_seq"', 2, true);
 
 
 --
 -- Name: Jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: career
 --
 
-SELECT pg_catalog.setval('public."Jobs_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Jobs_id_seq"', 4, true);
 
 
 --
 -- Name: Logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: career
 --
 
-SELECT pg_catalog.setval('public."Logs_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Logs_id_seq"', 9, true);
 
 
 --
 -- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: career
 --
 
-SELECT pg_catalog.setval('public."Users_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Users_id_seq"', 1, true);
 
 
 --
