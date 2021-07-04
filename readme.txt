@@ -13,3 +13,8 @@ docker run -it --network  nodejs_challenge_default --rm --user root  -e POSTGRES
 or use Docker-UI to access the image cli and then.
 psql -h localhost -U career -W 
 
+Backup:
+Inside Container:
+pg_dump -U career -W -d career > outfile3
+Copy files from container to wsl2:
+docker cp e6be36b4b804:/outfile3 ~/
