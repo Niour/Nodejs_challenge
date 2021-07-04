@@ -33,12 +33,14 @@ companyRouter.delete(
     const { companyId } = req?.body;
     // const user: User = res.locals.currentUser;
     const company = await Company.findOne({
-      attributes: ["companyName", "id"],
+      attributes: ["companyName", "id", "companyUserId"],
       where: { id: companyId },
     });
+    console.log(company);
+
     if (!company) {
       throw new EntityNotFoundError("Company does not exist");
-    } else if (company.id != res.locals.currentUser.id) {
+    } else if (company.companyUserId != res.locals.currentUser.id) {
       throw new AuthorizationError("Cant delete this Company");
     } else {
       company.destroy();

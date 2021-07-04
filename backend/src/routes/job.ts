@@ -123,17 +123,25 @@ jobRouter.put(
 
     const job = await Job.findOne({
       attributes: ["title", "id", "companyId"],
-      include: {
-        model: Company,
-        attributes: ["id"],
-      },
+      include: [
+        {
+          model: Company,
+          attributes: ["id"],
+          include: [
+            {
+              model: User,
+              attributes: ["id"],
+            },
+          ],
+        },
+      ],
       where: { id: jobId },
     });
 
     if (!job) {
       throw new EntityNotFoundError("Job does not exist");
-    } else if (job.jobToCompany.id != res.locals.currentUser.id) {
-      throw new AuthorizationError("Cant delete this Job");
+    } else if (job.jobToCompany.companyToUser.id != res.locals.currentUser.id) {
+      throw new AuthorizationError("Cant update this Job");
     } else {
       job.title = title;
       job.description = description;

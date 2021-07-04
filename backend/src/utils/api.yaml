@@ -39,7 +39,7 @@ paths:
         content:
           "application/json":
             schema:
-              $ref: "#/components/schemas/AuthConfig"
+              $ref: "#/components/schemas/SignupConfig"
       responses:
         200:
           description: "Successful creation of the User"
@@ -352,6 +352,89 @@ paths:
                     description: job Id
       tags:
         - Job
+  /job/create:
+    post:
+      summary: "Job Create"
+      description: "Register new job to the api"
+      operationId: "jobCreateEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/JobConfig"
+      responses:
+        200:
+          description: "Successful creation of the job"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "integer"
+                    description: job Id
+                  title:
+                    type: "string"
+                    description: title
+                  description:
+                    type: integer
+                    description: description of the job
+                  companyId:
+                    type: integer
+                    description: company's Id who held the job.
+                  updatedAt:
+                    type: "string"
+                    description: Time
+                  createdAt:
+                    type: "string"
+                    description: Time
+                  deletedAt:
+                    type: "string"
+                    description: Time
+      tags:
+        - Job
+  /job/update:
+    put:
+      summary: "Job Update"
+      description: "Register new job to the api"
+      operationId: "jobUpdateEndpoint"
+      consumes: ["application/json"]
+      produces: ["application/json"]
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/JobUpdateConfig"
+      responses:
+        200:
+          description: "Successful Update of the job"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "integer"
+                    description: job Id
+                  title:
+                    type: "string"
+                    description: title
+                  description:
+                    type: integer
+                    description: description of the job
+                  companyId:
+                    type: integer
+                    description: company's Id who held the job.
+                  updatedAt:
+                    type: "string"
+                    description: Time
+                  jobToCompany:
+                    type: "object"
+                    description: Object holding companyId and UserId
+      tags:
+        - Job
 
   /logs:
     get:
@@ -468,6 +551,22 @@ tags:
 
 components:
   schemas:
+    SignupConfig:
+      type: object
+      required: ["username", "password"]
+      properties:
+        username:
+          type: "string"
+          description: Username
+        email:
+          type: "string"
+          description: Email
+        password:
+          type: "string"
+          description: Password
+      example:
+        username: "Nikos"
+        password: "123"
     AuthConfig:
       type: object
       required: ["username", "password"]
@@ -490,6 +589,40 @@ components:
           description: companyName
       example:
         companyName: "Lidl"
+    JobUpdateConfig:
+      type: object
+      required: ["jobId", "title", "description"]
+      properties:
+        title:
+          type: "string"
+          description: Title of the job.
+        description:
+          type: "string"
+          description: description of the job.
+        jobId:
+          type: "integer"
+          description: jobId
+      example:
+        jobId: 35
+        title: "Senior Dev"
+        description: "Senior Dev that knows MySQL, PHP, Node.js"
+    JobConfig:
+      type: object
+      required: ["companyId", "title", "description"]
+      properties:
+        title:
+          type: "string"
+          description: Title of the job.
+        description:
+          type: "string"
+          description: description of the job.
+        companyId:
+          type: "integer"
+          description: companyId
+      example:
+        companyId: 35
+        title: "Senior Dev"
+        description: "Senior Dev that knows MySQL, PHP, Node.js"
     CompanyDelete:
       type: object
       required: ["companyId"]

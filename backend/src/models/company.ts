@@ -5,6 +5,7 @@ import {
   ForeignKey,
   HasMany,
   BelongsTo,
+  AfterDestroy,
 } from "sequelize-typescript";
 import Job from "./job";
 import User from "./user";
@@ -24,11 +25,23 @@ class Company extends Model {
   @Column
   companyUserId!: number;
 
-  @HasMany(() => Job, "companyId")
+  @HasMany(() => Job, {
+    foreignKey: "companyId",
+    hooks: true,
+  })
   jobss!: Job[];
 
   @BelongsTo(() => User)
   companyToUser!: User;
+
+  @AfterDestroy
+  static async deleteJobs(instance: Company) {
+    instance.$get("jobss").then((items: Job[]) => {
+      items.map((item: Job) => {
+        item.destroy();
+      });
+    });
+  }
 }
 
 export default Company;
