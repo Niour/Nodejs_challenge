@@ -1,4 +1,4 @@
-Template from 
+Template from  
 https://github.com/Niour/docker-compose-mysql-express-react
 
 This project is a Nodejs challenge.
