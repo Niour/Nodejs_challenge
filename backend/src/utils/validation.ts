@@ -9,9 +9,8 @@ export function validate<T>(obj: T, schema: Schema, value: string): void {
   const result: ValidationResult = schema.validate(obj);
   if (result.error) {
 
+console.log('Autosquash');
 
-    console.log('Changed mind');
-    
     throw new CustomValidationError(result, value);
   }
 }
