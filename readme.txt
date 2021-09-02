@@ -12,11 +12,8 @@ password: 123
 docker-compose up
 
 Access CLI OF postgre:
--Access postgre CLI with docker Cli. Where [nodejs_challenge_default] the network name. https://github.com/docker-library/postgres/pull/253
-This is a different approach:
-docker run -it --network  nodejs_challenge_default --rm --user root  -e POSTGRES_PASSWORD=123 nodejs_challenge_postgre_1 psql -h postgre_1 -U career -W
-or use Docker-UI to access the image cli and then.
-psql -h localhost -U career -W 
+exec -it [container] bash or use Docker-UI to access the image cli 
+and then: psql -h localhost -U career -W 
 
 Backup:
 Inside Container:
